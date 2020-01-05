@@ -1,0 +1,65 @@
+
+CREATE TABLE userAccount (
+userid INT PRIMARY KEY,
+firstName VARCHAR(255) NOT NULL,
+lastName VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL,
+password VARCHAR(255) NOT NULL,
+age INT NOT NULL,
+gender VARCHAR(255) ,
+bookmarks VARCHAR(3000),
+readList VARCHAR(3000),
+catalogSet VARCHAR(3000),
+createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+
+CREATE TABLE story (
+storyId INT PRIMARY KEY,
+title VARCHAR(255),
+Content VARCHAR(5000),
+tags VARCHAR(1000),
+claps INT,
+status VARCHAR(100),
+createdTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updatedTimeStamp TIMESTAMP,
+Comments VARCHAR(1000));
+
+CREATE TABLE subscription (
+subscriptionId INT PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+Price INT ,
+Coupon VARCHAR(1000));
+
+CREATE TABLE catalog (
+catalogId INT PRIMARY KEY,
+catalogName VARCHAR(1000) NOT NULL);
+
+Create table payment (
+transaction INT PRIMARY KEY,
+amount INT,
+userId INT,
+timeStamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (userId)
+        REFERENCES userAccount(userid)
+        ON DELETE CASCADE);
+
+CREATE TABLE userStoryMap(
+userId INT NOT NULL,
+storyId INT NOT NULL,
+bookmarked BOOLEAN,
+read BOOLEAN,
+FOREIGN KEY (userId)
+        REFERENCES userAccount(userid)
+        ON DELETE CASCADE,
+FOREIGN KEY (storyId)
+        REFERENCES story(storyId)
+        ON DELETE CASCADE);
+
+CREATE TABLE followerMap (
+userOne INT NOT NULL , 
+userTwo INT NOT NULL,
+FOREIGN KEY (userOne)
+        REFERENCES userAccount(userid)
+        ON DELETE CASCADE,
+FOREIGN KEY (userTwo)
+        REFERENCES userAccount(userid)
+        ON DELETE CASCADE) ;
